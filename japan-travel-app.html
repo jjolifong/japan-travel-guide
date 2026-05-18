@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🗾 일본 가족여행 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --thomas-blue: #1565C0;
+    --thomas-blue-light: #1976D2;
+    --thomas-red: #C62828;
+    --thomas-red-light: #E53935;
+    --bg: #F0F4F8;
+    --card: #FFFFFF;
+    --text: #1A2332;
+    --text-sub: #5A6A7A;
+    --border: #E2E8F0;
+    --success: #16A34A;
+    --warning: #D97706;
+    --tab-h: 64px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+  /* ─── 상단 헤더 ─── */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--thomas-blue);
+    padding: 0 16px;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(21,101,192,0.3);
+  }
+  .header-title { color: #fff; font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+  .header-sub { color: rgba(255,255,255,0.7); font-size: 11px; margin-top: 1px; }
+  .dday-badge {
+    background: var(--thomas-red); color: #fff;
+    padding: 4px 10px; border-radius: 20px;
+    font-size: 13px; font-weight: 700;
+    min-width: 50px; text-align: center;
+  }
+
+  /* ─── 탭 네비게이션 (하단 고정) ─── */
+  .tab-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    display: flex;
+    height: var(--tab-h);
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+  }
+  .tab-btn {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: none; border: none; cursor: pointer;
+    color: var(--text-sub); font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10px; font-weight: 500; gap: 3px;
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .tab-btn .tab-icon { font-size: 20px; line-height: 1; }
+  .tab-btn.active { color: var(--thomas-blue); }
+  .tab-btn.active .tab-icon { filter: drop-shadow(0 0 4px rgba(21,101,192,0.3)); }
+
+  /* ─── 메인 콘텐츠 ─── */
+  .main { padding: 72px 0 80px; min-height: 100vh; }
+  .tab-content { display: none; animation: fadeIn 0.25s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── 공통 카드 ─── */
+  .card { background: var(--card); border-radius: 16px; margin: 0 14px 12px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+  .section-label { font-size: 11px; font-weight: 700; color: var(--thomas-blue); text-transform: uppercase; letter-spacing: 0.5px; padding: 16px 14px 6px; }
+
+  /* ─── 홈 탭 ─── */
+  .hero-card {
+    background: linear-gradient(135deg, var(--thomas-blue) 0%, #1976D2 50%, #1565C0 100%);
+    margin: 0 14px 12px; border-radius: 20px; padding: 20px;
+    color: #fff; position: relative; overflow: hidden;
+  }
+  .hero-card::before {
+    content: '🚂'; position: absolute; right: -10px; bottom: -10px;
+    font-size: 80px; opacity: 0.12; transform: rotate(-10deg);
+  }
+  .hero-date-input { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; color: #fff; padding: 6px 10px; font-size: 14px; width: 100%; margin-top: 8px; font-family: 'Noto Sans KR', sans-serif; }
+  .hero-date-input::placeholder { color: rgba(255,255,255,0.6); }
+  .dday-big { font-size: 48px; font-weight: 900; line-height: 1; }
+  .dday-label { font-size: 13px; opacity: 0.8; margin-top: 2px; }
+
+  .today-card { background: var(--card); margin: 0 14px 12px; border-radius: 16px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .today-day { font-size: 12px; font-weight: 700; color: var(--thomas-red); margin-bottom: 4px; }
+  .today-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+  .today-item { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-sub); }
+  .today-item:last-child { border-bottom: none; }
+  .today-item-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--thomas-blue); margin-top: 5px; flex-shrink: 0; }
+
+  .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 14px 12px; }
+  .quick-btn {
+    background: var(--card); border-radius: 14px; padding: 14px 12px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); cursor: pointer; text-decoration: none;
+    border: none; font-family: 'Noto Sans KR', sans-serif;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .quick-btn:active { transform: scale(0.97); box-shadow: 0 0 2px rgba(0,0,0,0.1); }
+  .quick-btn-icon { font-size: 24px; }
+  .quick-btn-label { font-size: 12px; font-weight: 600; color: var(--text); text-align: center; }
+  .quick-btn-sub { font-size: 10px; color: var(--text-sub); text-align: center; }
+  .quick-btn.red { border-left: 3px solid var(--thomas-red); }
+  .quick-btn.blue { border-left: 3px solid var(--thomas-blue); }
+
+  /* ─── 준비 탭 ─── */
+  .passport-form { display: flex; flex-direction: column; gap: 10px; }
+  .passport-row { background: var(--bg); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; }
+  .passport-name { font-size: 14px; font-weight: 600; }
+  .passport-date { border: none; background: none; font-size: 13px; color: var(--thomas-blue); font-family: 'Noto Sans KR', sans-serif; cursor: pointer; }
+  .passport-status { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+  .status-ok { background: #DCFCE7; color: #16A34A; }
+  .status-warn { background: #FEF9C3; color: #D97706; }
+  .status-danger { background: #FEE2E2; color: #DC2626; }
+
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid var(--border); cursor: pointer;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 20px; height: 20px; border-radius: 5px; border: 2px solid var(--border);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; margin-top: 1px;
+  }
+  .check-box.checked { background: var(--thomas-blue); border-color: var(--thomas-blue); }
+  .check-box.checked::after { content: '✓'; color: #fff; font-size: 12px; font-weight: 700; }
+  .check-label { font-size: 14px; flex: 1; }
+  .check-label.checked { text-decoration: line-through; color: var(--text-sub); }
+  .check-category { font-size: 10px; font-weight: 700; color: var(--thomas-red); display: block; margin-bottom: 2px; }
+
+  .link-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg); border-radius: 10px; padding: 12px 14px;
+    margin-bottom: 8px; text-decoration: none; color: var(--text);
+    border: none; width: 100%; font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer; font-size: 14px; font-weight: 500;
+  }
+  .link-btn-right { font-size: 18px; color: var(--text-sub); }
+
+  .info-box { background: #EFF6FF; border-left: 3px solid var(--thomas-blue); border-radius: 0 8px 8px 0; padding: 10px 12px; margin-top: 8px; font-size: 12px; color: #1E40AF; line-height: 1.6; }
+  .warn-box { background: #FFFBEB; border-left: 3px solid var(--warning); border-radius: 0 8px 8px 0; padding: 10px 12px; margin-top: 8px; font-size: 12px; color: #92400E; line-height: 1.6; }
+
+  /* ─── 일정 탭 ─── */
+  .schedule-card {
+    background: var(--card); margin: 0 14px 10px; border-radius: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden;
+  }
+  .schedule-header {
+    padding: 14px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(90deg, var(--thomas-blue) 0%, var(--thomas-blue-light) 100%);
+  }
+  .schedule-day-badge {
+    background: rgba(255,255,255,0.25); color: #fff;
+    padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap;
+  }
+  .schedule-header-info { flex: 1; }
+  .schedule-day-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .schedule-accommodation { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+  .schedule-toggle { font-size: 16px; color: rgba(255,255,255,0.7); transition: transform 0.2s; }
+  .schedule-toggle.open { transform: rotate(180deg); }
+  .schedule-body { display: none; padding: 14px 16px; border-top: 1px solid var(--border); }
+  .schedule-body.open { display: block; }
+  .schedule-item { font-size: 13px; color: var(--text-sub); padding: 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+  .schedule-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--thomas-blue); margin-top: 6px; flex-shrink: 0; }
+  .schedule-edit-area { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 10px; font-size: 13px; font-family: 'Noto Sans KR', sans-serif; resize: vertical; min-height: 100px; color: var(--text); background: var(--bg); }
+  .schedule-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .btn-edit { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 600; color: var(--text-sub); cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+  .btn-save { background: var(--thomas-blue); color: #fff; border: none; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; }
+  .btn-map { background: #16A34A; color: #fff; border: none; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; text-decoration: none; display: inline-block; }
+  .schedule-note { font-size: 11px; color: var(--thomas-red); background: #FFF5F5; border-radius: 6px; padding: 6px 10px; margin-top: 8px; }
+
+  /* ─── 명소/숙소/식당 서브탭 ─── */
+  .sub-tabs { display: flex; overflow-x: auto; padding: 0 14px; gap: 8px; margin-bottom: 4px; -ms-overflow-style: none; scrollbar-width: none; }
+  .sub-tabs::-webkit-scrollbar { display: none; }
+  .sub-tab { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; transition: all 0.15s; background: var(--card); color: var(--text-sub); }
+  .sub-tab.active { background: var(--thomas-blue); color: #fff; }
+  .sub-content { display: none; }
+  .sub-content.active { display: block; }
+
+  /* 명소 카드 */
+  .spot-card { background: var(--card); margin: 0 14px 12px; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .spot-header { padding: 14px 16px; background: var(--thomas-blue); color: #fff; display: flex; align-items: flex-start; gap: 12px; }
+  .spot-emoji { font-size: 32px; }
+  .spot-name { font-size: 16px; font-weight: 700; }
+  .spot-location { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+  .spot-body { padding: 14px 16px; }
+  .spot-row { display: flex; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .spot-key { color: var(--text-sub); min-width: 70px; font-weight: 500; flex-shrink: 0; }
+  .spot-val { color: var(--text); flex: 1; line-height: 1.5; }
+  .spot-tag { display: inline-block; background: #EFF6FF; color: var(--thomas-blue); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 600; margin: 2px 2px 2px 0; }
+  .spot-tag.red { background: #FEE2E2; color: var(--thomas-red); }
+  .spot-tag.green { background: #DCFCE7; color: #16A34A; }
+  .spot-link-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .spot-link { background: var(--thomas-blue); color: #fff; border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 700; text-decoration: none; display: inline-block; }
+  .spot-link.red { background: var(--thomas-red); }
+  .spot-link.green { background: #16A34A; }
+
+  /* 숙소 카드 */
+  .hotel-card { background: var(--card); margin: 0 14px 12px; border-radius: 16px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .hotel-day { font-size: 11px; font-weight: 700; color: var(--thomas-red); margin-bottom: 4px; }
+  .hotel-name { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .hotel-info { font-size: 12px; color: var(--text-sub); line-height: 1.8; }
+  .hotel-price { font-size: 13px; font-weight: 700; color: var(--thomas-blue); margin-top: 8px; }
+  .hotel-links { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .hotel-link { background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; text-decoration: none; }
+
+  /* 식당 카드 */
+  .food-region { font-size: 12px; font-weight: 700; color: var(--thomas-red); padding: 12px 14px 4px; }
+  .food-card { background: var(--card); margin: 0 14px 8px; border-radius: 12px; padding: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); display: flex; gap: 12px; }
+  .food-emoji { font-size: 28px; flex-shrink: 0; }
+  .food-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .food-desc { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+  .food-price { font-size: 12px; color: var(--thomas-blue); font-weight: 600; margin-top: 4px; }
+
+  /* ─── 결제/통신 탭 ─── */
+  .payment-tab { }
+  .method-card { background: var(--card); margin: 0 14px 10px; border-radius: 14px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 4px solid var(--thomas-blue); }
+  .method-card.red { border-left-color: var(--thomas-red); }
+  .method-card.green { border-left-color: #16A34A; }
+  .method-card.orange { border-left-color: var(--warning); }
+  .method-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .method-body { font-size: 13px; color: var(--text-sub); line-height: 1.8; }
+  .method-body b { color: var(--text); }
+  .atm-badge { display: inline-block; background: #EFF6FF; color: var(--thomas-blue); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin: 2px; }
+  .atm-badge.no { background: #FEE2E2; color: var(--thomas-red); }
+
+  /* ─── AI 탭 ─── */
+  .chat-container { display: flex; flex-direction: column; height: calc(100vh - 56px - 64px - 16px); padding: 0 14px; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 8px 0; display: flex; flex-direction: column; gap: 10px; }
+  .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.6; }
+  .chat-msg.user { background: var(--thomas-blue); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .chat-msg.ai { background: var(--card); color: var(--text); align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .chat-msg.loading { opacity: 0.6; }
+  .chat-input-row { display: flex; gap: 8px; padding: 10px 0; }
+  .chat-input { flex: 1; border: 1px solid var(--border); border-radius: 24px; padding: 10px 16px; font-size: 14px; font-family: 'Noto Sans KR', sans-serif; background: var(--card); resize: none; outline: none; }
+  .chat-input:focus { border-color: var(--thomas-blue); }
+  .chat-send { background: var(--thomas-blue); color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 18px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .quick-phrases { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; -ms-overflow-style: none; scrollbar-width: none; }
+  .quick-phrases::-webkit-scrollbar { display: none; }
+  .phrase-btn { flex-shrink: 0; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 6px 12px; font-size: 12px; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; white-space: nowrap; }
+
+  /* ─── 긴급 탭 ─── */
+  .emergency-card { background: var(--card); margin: 0 14px 10px; border-radius: 16px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .emergency-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .call-btn { display: flex; align-items: center; justify-content: space-between; background: var(--bg); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; text-decoration: none; color: var(--text); }
+  .call-btn:last-child { margin-bottom: 0; }
+  .call-name { font-size: 14px; font-weight: 600; }
+  .call-number { font-size: 13px; color: var(--thomas-blue); font-weight: 700; }
+  .call-icon { font-size: 20px; }
+
+  .phrase-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .phrase-table th { background: var(--thomas-blue); color: #fff; padding: 7px 8px; text-align: left; font-size: 11px; }
+  .phrase-table td { padding: 8px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .phrase-table tr:last-child td { border-bottom: none; }
+  .phrase-jp { color: var(--thomas-blue); font-weight: 600; }
+  .phrase-pron { color: var(--text-sub); font-size: 11px; }
+
+  .situation-card { background: var(--bg); border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+  .situation-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--thomas-red); }
+  .situation-steps { font-size: 12px; color: var(--text-sub); line-height: 1.8; counter-reset: step; }
+  .situation-steps li { counter-increment: step; list-style: none; padding-left: 16px; position: relative; }
+  .situation-steps li::before { content: counter(step)'.'; position: absolute; left: 0; color: var(--thomas-red); font-weight: 700; }
+
+  /* ─── 기타 공통 ─── */
+  .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .badge { padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-blue { background: #EFF6FF; color: var(--thomas-blue); }
+  .badge-red { background: #FEE2E2; color: var(--thomas-red); }
+  .badge-green { background: #DCFCE7; color: #16A34A; }
+  .badge-orange { background: #FEF3C7; color: #D97706; }
+  .divider { height: 1px; background: var(--border); margin: 8px 0; }
+</style>
+</head>
+<body>
+
+<!-- 상단 헤더 -->
+<div class="header">
+  <div>
+    <div class="header-title">🗾 일본 가족여행 가이드</div>
+    <div class="header-sub">나고야→오이가와→후지큐→도쿄 | 4인 가족</div>
+  </div>
+  <div class="dday-badge" id="headerDday">D-?</div>
+</div>
+
+<!-- 메인 콘텐츠 -->
+<div class="main">
+
+  <!-- ══════════════ TAB 0: 홈 ══════════════ -->
+  <div class="tab-content active" id="tab-home">
+    <!-- D-Day 설정 카드 -->
+    <div class="hero-card" style="margin-top:8px;">
+      <div class="dday-label">출발까지</div>
+      <div class="dday-big" id="ddayBig">D-?</div>
+      <div class="dday-label" id="ddayDesc">출발일을 설정해주세요</div>
+      <input type="date" class="hero-date-input" id="departureDateInput" placeholder="출발일 선택" onchange="updateDday()">
+    </div>
+
+    <!-- 오늘 일정 -->
+    <div class="today-card" id="todayCard" style="display:none;">
+      <div class="today-day" id="todayDayLabel"></div>
+      <div class="today-title" id="todayTitle"></div>
+      <div id="todayItems"></div>
+      <div class="info-box" id="todayNote" style="display:none;"></div>
+    </div>
+
+    <!-- 빠른 접근 -->
+    <div class="section-label">빠른 접근</div>
+    <div class="quick-grid">
+      <button class="quick-btn red" onclick="switchTab('tab-emergency')">
+        <span class="quick-btn-icon">🆘</span>
+        <span class="quick-btn-label">긴급 연락처</span>
+        <span class="quick-btn-sub">경찰·병원·영사관</span>
+      </button>
+      <a class="quick-btn blue" href="https://maps.google.com" target="_blank">
+        <span class="quick-btn-icon">🗺️</span>
+        <span class="quick-btn-label">구글맵 열기</span>
+        <span class="quick-btn-sub">현재 위치 확인</span>
+      </a>
+      <button class="quick-btn" onclick="switchTab('tab-info'); setTimeout(()=>switchSubTab('sub-payment'),100)">
+        <span class="quick-btn-icon">💳</span>
+        <span class="quick-btn-label">결제·통신</span>
+        <span class="quick-btn-sub">카드·현금·eSIM</span>
+      </button>
+      <button class="quick-btn" onclick="switchTab('tab-ready'); setTimeout(()=>document.getElementById('checkSection').scrollIntoView({behavior:'smooth'}),200)">
+        <span class="quick-btn-icon">✅</span>
+        <span class="quick-btn-label">준비 체크리스트</span>
+        <span class="quick-btn-sub">출발 전 확인</span>
+      </button>
+    </div>
+
+    <!-- 일본 운전 핵심 주의 -->
+    <div class="section-label">🚗 일본 운전 핵심 주의</div>
+    <div class="card">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:#FEE2E2;border-radius:8px;padding:10px;text-align:center;font-size:12px;font-weight:700;color:#C62828;">⬅️ 좌측통행<br><span style="font-size:10px;font-weight:400;color:#91403A;">한국과 반대!</span></div>
+        <div style="background:#EFF6FF;border-radius:8px;padding:10px;text-align:center;font-size:12px;font-weight:700;color:#1565C0;">60 / 100<br><span style="font-size:10px;font-weight:400;">일반/고속 km/h</span></div>
+        <div style="background:#DCFCE7;border-radius:8px;padding:10px;text-align:center;font-size:12px;font-weight:700;color:#16A34A;">ETC 카드<br><span style="font-size:10px;font-weight:400;">렌트카 내장 (300¥)</span></div>
+        <div style="background:#FEF3C7;border-radius:8px;padding:10px;text-align:center;font-size:12px;font-weight:700;color:#D97706;">주차<br><span style="font-size:10px;font-weight:400;">유료주차장만</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB 1: 준비 ══════════════ -->
+  <div class="tab-content" id="tab-ready">
+
+    <!-- 여권 유효기간 체크 -->
+    <div class="section-label">📄 여권 유효기간 체크</div>
+    <div class="card">
+      <div class="card-title">👨‍👩‍👧‍👦 가족 여권 관리</div>
+      <div class="passport-form" id="passportList"></div>
+      <div class="info-box" style="margin-top:12px;">💡 일본은 여권 잔존기간 별도 규정 없음. 여행 기간만큼 남아있으면 OK.</div>
+    </div>
+
+    <!-- 국제운전면허증 -->
+    <div class="section-label">🚗 국제운전면허증</div>
+    <div class="card">
+      <div class="card-title">취득 정보</div>
+      <div class="method-body">
+        <b>발급처:</b> 전국 경찰서 / 운전면허시험장 (당일 즉시)<br>
+        <b>수수료:</b> 9,000원<br>
+        <b>준비물:</b> 여권, 운전면허증, 여권용 사진 1매<br>
+        <b>유효기간:</b> 발급일로부터 1년
+      </div>
+      <div class="warn-box">⚠️ 현지에서 <b>국제면허증 + 한국면허증 + 여권</b> 3가지 모두 지참 필수!<br>영문운전면허증은 일본에서 사용 불가</div>
+    </div>
+
+    <!-- 핵심 예매 가이드 -->
+    <div class="section-label">🎟️ 핵심 예매 가이드</div>
+    <div class="card">
+      <div class="card-title">🚂 오이가와 토마스 SL</div>
+      <div class="method-body">
+        <b>공식 사이트:</b> thomas.daitetsu.jp<br>
+        <b>예매처 4곳</b> (전화 예매 불가)
+      </div>
+      <div class="badge-row" style="margin:8px 0;">
+        <span class="badge badge-blue">아소뷰 ★추천</span>
+        <span class="badge badge-blue">로손티켓</span>
+        <span class="badge badge-blue">JR동해EX</span>
+        <span class="badge badge-blue">JRE MALL</span>
+      </div>
+      <div class="warn-box">⚠️ 오픈 즉시 매진! 10월 탑승분 → 7~8월 예매 오픈 예상. 공식 SNS 팔로우 필수</div>
+      <div class="spot-link-row" style="margin-top:10px;">
+        <a class="spot-link" href="https://thomas.daitetsu.jp" target="_blank">공식 사이트</a>
+        <a class="spot-link" href="https://www.asoview.com/searchbox/railways/?keyword=%E5%A4%A7%E4%BA%95%E5%B7%9D%E9%90%B5%E9%81%93" target="_blank">아소뷰 예매</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎢 후지큐 하이랜드</div>
+      <div class="method-body">
+        <b>프리패스:</b> 성인 7,000~8,000엔 / 아동 5,000~6,000엔<br>
+        <b>토마스랜드:</b> 프리패스 포함 (별도 비용 없음)<br>
+        <b>우천시:</b> 토마스랜드 정상 운영 ✅
+      </div>
+      <div class="spot-link-row" style="margin-top:10px;">
+        <a class="spot-link" href="https://www.fujiq.jp/en/area/thomas/" target="_blank">공식 사이트</a>
+        <a class="spot-link" href="https://www.klook.com/ko/activity/95879-fujiq-highland-admission-ticket/" target="_blank">클룩 예매</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🌿 지브리파크 (나고야)</div>
+      <div class="method-body">
+        <b>위치:</b> 나고야역에서 리니모 약 40분<br>
+        <b>예매:</b> 공식 사이트 선착순+추첨 (1~2개월 전 필수)
+      </div>
+      <div class="spot-link-row" style="margin-top:10px;">
+        <a class="spot-link" href="https://ghibli-park.jp" target="_blank">공식 사이트</a>
+      </div>
+    </div>
+
+    <!-- 체크리스트 -->
+    <div class="section-label" id="checkSection">✅ 출발 전 체크리스트</div>
+    <div class="card">
+      <div id="checklistItems"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB 2: 일정 ══════════════ -->
+  <div class="tab-content" id="tab-schedule">
+    <div style="padding:10px 14px 4px;display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:12px;color:var(--text-sub);">일정을 탭하여 편집하세요</div>
+      <button onclick="resetSchedule()" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text-sub);cursor:pointer;font-family:'Noto Sans KR',sans-serif;">초기화</button>
+    </div>
+    <div id="scheduleList"></div>
+  </div>
+
+  <!-- ══════════════ TAB 3: 정보 ══════════════ -->
+  <div class="tab-content" id="tab-info">
+    <div style="padding:10px 0 4px;">
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="switchSubTab('sub-spots')">🗺️ 명소</button>
+        <button class="sub-tab" onclick="switchSubTab('sub-hotels')">🏨 숙소</button>
+        <button class="sub-tab" onclick="switchSubTab('sub-food')">🍜 식당</button>
+        <button class="sub-tab" onclick="switchSubTab('sub-payment')">💳 결제·통신</button>
+        <button class="sub-tab" onclick="switchSubTab('sub-ai')">🤖 AI가이드</button>
+      </div>
+    </div>
+
+    <!-- 명소 -->
+    <div class="sub-content active" id="sub-spots">
+      <div class="spot-card">
+        <div class="spot-header">
+          <div class="spot-emoji">🚂</div>
+          <div>
+            <div class="spot-name">오이가와 철도 토마스 SL</div>
+            <div class="spot-location">📍 시즈오카현 시마다시 신카나야역</div>
+          </div>
+        </div>
+        <div class="spot-body">
+          <div class="spot-row"><div class="spot-key">구간</div><div class="spot-val">신카나야역 ↔ 카와네온센사사마도역 (편도 40분)</div></div>
+          <div class="spot-row"><div class="spot-key">출발시간</div><div class="spot-val">오전 10:39 / 오후 13:58 (신카나야 기준)</div></div>
+          <div class="spot-row"><div class="spot-key">요금</div><div class="spot-val">성인 약 2,500엔 / 아동 약 1,300엔 (편도)</div></div>
+          <div class="spot-row"><div class="spot-key">2026년</div><div class="spot-val">토마스호 + 퍼시호 신규 운행 (아시아 최초)</div></div>
+          <div class="spot-row"><div class="spot-key">토마스 페어</div><div class="spot-val">신카나야역 개최 / 입장료 500엔</div></div>
+          <div class="badge-row">
+            <span class="spot-tag">연중 운행</span>
+            <span class="spot-tag">10~11월 성수기 하루 3회</span>
+            <span class="spot-tag red">예매 필수 (즉시 매진)</span>
+          </div>
+          <div class="info-box" style="margin-top:8px;">🎁 차내 토마스 도시락 판매 | 신카나야역 전차대 회전 무료 관람</div>
+          <div class="spot-link-row">
+            <a class="spot-link" href="https://thomas.daitetsu.jp" target="_blank">공식 사이트</a>
+            <a class="spot-link red" href="https://www.asoview.com" target="_blank">아소뷰 예매</a>
+            <a class="spot-link green" href="https://maps.google.com/?q=新金谷駅+静岡県" target="_blank">지도</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="spot-header" style="background:linear-gradient(90deg,#C62828,#E53935);">
+          <div class="spot-emoji">🎢</div>
+          <div>
+            <div class="spot-name">후지큐 하이랜드 토마스랜드</div>
+            <div class="spot-location">📍 야마나시현 후지요시다시</div>
+          </div>
+        </div>
+        <div class="spot-body">
+          <div class="spot-row"><div class="spot-key">운영시간</div><div class="spot-val">09:00~17:00 (겨울) / 09:00~20:00 (여름)</div></div>
+          <div class="spot-row"><div class="spot-key">프리패스</div><div class="spot-val">성인 7,000~8,000엔 / 아동 5,000~6,000엔</div></div>
+          <div class="spot-row"><div class="spot-key">토마스랜드</div><div class="spot-val">어트랙션 20개+ / 3세부터 탑승 / 프리패스 포함</div></div>
+          <div class="spot-row"><div class="spot-key">신장제한</div><div class="spot-val">대형 롤러코스터 110~130cm (초등생은 토마스랜드 위주)</div></div>
+          <div class="spot-row"><div class="spot-key">우천</div><div class="spot-val">토마스랜드 정상 운영 ✅</div></div>
+          <div class="badge-row">
+            <span class="spot-tag green">토마스·퍼시·제임스·토비</span>
+            <span class="spot-tag">후지산 뷰</span>
+            <span class="spot-tag red">개장 30분 전 도착 권장</span>
+          </div>
+          <div class="spot-link-row">
+            <a class="spot-link red" href="https://www.fujiq.jp/en/area/thomas/" target="_blank">토마스랜드</a>
+            <a class="spot-link" href="https://www.klook.com/ko/activity/95879-fujiq-highland-admission-ticket/" target="_blank">클룩 예매</a>
+            <a class="spot-link green" href="https://maps.google.com/?q=富士急ハイランド" target="_blank">지도</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="spot-header" style="background:linear-gradient(90deg,#155724,#1e7e34);">
+          <div class="spot-emoji">🌿</div>
+          <div>
+            <div class="spot-name">지브리파크</div>
+            <div class="spot-location">📍 아이치현 나가쿠테시 (나고야 근교)</div>
+          </div>
+        </div>
+        <div class="spot-body">
+          <div class="spot-row"><div class="spot-key">교통</div><div class="spot-val">나고야역 → 후지가오카역(지하철) → 리니모 15분</div></div>
+          <div class="spot-row"><div class="spot-key">입장료</div><div class="spot-val">성인 약 2,000엔~ / 아동 약 1,000엔~ (구역별 상이)</div></div>
+          <div class="spot-row"><div class="spot-key">주요 구역</div><div class="spot-val">지브리 대창고·청춘의 언덕·돈도코숲·마녀의 계곡</div></div>
+          <div class="badge-row">
+            <span class="spot-tag red">사전 예매 필수 (현장 구매 어려움)</span>
+            <span class="spot-tag">1~2개월 전 신청</span>
+          </div>
+          <div class="spot-link-row">
+            <a class="spot-link green" href="https://ghibli-park.jp" target="_blank">공식 사이트</a>
+            <a class="spot-link green" href="https://maps.google.com/?q=ジブリパーク+長久手市" target="_blank">지도</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="spot-card">
+        <div class="spot-header" style="background:linear-gradient(90deg,#374151,#4B5563);">
+          <div class="spot-emoji">🤖</div>
+          <div>
+            <div class="spot-name">오다이바 유니콘 건담</div>
+            <div class="spot-location">📍 도쿄 고토구 아오미 (다이버시티 도쿄 앞)</div>
+          </div>
+        </div>
+        <div class="spot-body">
+          <div class="spot-row"><div class="spot-key">입장료</div><div class="spot-val"><b>무료</b> 🎉</div></div>
+          <div class="spot-row"><div class="spot-key">퍼포먼스</div><div class="spot-val">11:00, 13:00, 15:00, 17:00, 19:00, 20:00, 21:00 (약 3분)</div></div>
+          <div class="spot-row"><div class="spot-key">볼거리</div><div class="spot-val">유니콘→데스티니 변신 + LED + 음악</div></div>
+          <div class="spot-row"><div class="spot-key">주변</div><div class="spot-val">건담 베이스 도쿄 (프라모델), 다이버시티 쇼핑몰</div></div>
+          <div class="spot-link-row">
+            <a class="spot-link" href="https://maps.google.com/?q=ダイバーシティ東京プラザ" target="_blank">지도</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 숙소 -->
+    <div class="sub-content" id="sub-hotels">
+      <div class="section-label">🏨 일차별 추천 숙박지</div>
+      <div class="hotel-card">
+        <div class="hotel-day">1~2박 · 나고야</div>
+        <div class="hotel-name">나고야 비즈니스 호텔</div>
+        <div class="hotel-info">
+          위치: 나고야역 주변 또는 사카에<br>
+          추천: 패밀리룸 or 더블 2개 예약<br>
+          주차: 유료주차장 별도 예약 필요 (렌트카)
+        </div>
+        <div class="hotel-price">💴 15,000~25,000엔/박 (4인 기준)</div>
+        <div class="hotel-links">
+          <a class="hotel-link" href="https://www.agoda.com/ko-kr/city/nagoya-jp.html" target="_blank">아고다</a>
+          <a class="hotel-link" href="https://www.booking.com/city/jp/nagoya.ko.html" target="_blank">부킹닷컴</a>
+          <a class="hotel-link" href="https://travel.rakuten.com/hotel/search/?f_area_cd=130001&f_otona_su=4" target="_blank">라쿠텐</a>
+        </div>
+      </div>
+      <div class="hotel-card">
+        <div class="hotel-day">3박 · 오이가와 인근</div>
+        <div class="hotel-name">카와네온센 호텔 / 료칸</div>
+        <div class="hotel-info">
+          특징: 오이가와 강변 온천 + 아름다운 자연<br>
+          팁: 토마스 SL 탑승 전날 숙박 → 아침 여유 있게 이동<br>
+          석식 포함 여부 예약 시 확인
+        </div>
+        <div class="hotel-price">💴 20,000~35,000엔/박 (4인 기준)</div>
+        <div class="hotel-links">
+          <a class="hotel-link" href="https://travel.rakuten.com/hotel/search/?f_area_cd=220011&f_otona_su=4" target="_blank">라쿠텐</a>
+          <a class="hotel-link" href="https://www.jalan.net/en/japan-hotels/shizuoka/" target="_blank">자란넷</a>
+        </div>
+      </div>
+      <div class="hotel-card">
+        <div class="hotel-day">4박 · 카와구치코</div>
+        <div class="hotel-name">후지산뷰 료칸 / 리조트 호텔</div>
+        <div class="hotel-info">
+          특징: 후지산 조망 + 온천 ⭐<br>
+          위치: 후지큐 하이랜드에서 차로 5분<br>
+          추천: 호수 뷰 객실 우선 예약
+        </div>
+        <div class="hotel-price">💴 25,000~50,000엔/박 (4인 기준)</div>
+        <div class="hotel-links">
+          <a class="hotel-link" href="https://travel.rakuten.com/hotel/search/?f_area_cd=190009&f_otona_su=4" target="_blank">라쿠텐</a>
+          <a class="hotel-link" href="https://www.jalan.net/en/japan-hotels/yamanashi/" target="_blank">자란넷</a>
+        </div>
+      </div>
+      <div class="hotel-card">
+        <div class="hotel-day">5박 · 도쿄</div>
+        <div class="hotel-name">도쿄 시내 비즈니스 호텔</div>
+        <div class="hotel-info">
+          추천 지역: 시나가와, 아사쿠사, 신주쿠<br>
+          팁: 하네다 공항 접근성 고려 시 시나가와 지역<br>
+          주차: 대부분 유료 (1박 2,000~3,000엔)
+        </div>
+        <div class="hotel-price">💴 20,000~35,000엔/박 (4인 기준)</div>
+        <div class="hotel-links">
+          <a class="hotel-link" href="https://www.agoda.com/ko-kr/city/tokyo-jp.html" target="_blank">아고다</a>
+          <a class="hotel-link" href="https://www.booking.com/city/jp/tokyo.ko.html" target="_blank">부킹닷컴</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 식당 -->
+    <div class="sub-content" id="sub-food">
+      <div class="food-region">🏙️ 나고야 명물</div>
+      <div class="food-card"><div class="food-emoji">🍱</div><div><div class="food-name">히츠마부시 (ひつまぶし)</div><div class="food-desc">나고야식 장어덮밥. 3가지 방식으로 즐기는 명물 요리</div><div class="food-price">💴 3,000~5,000엔/인 | 아츠타호라이켄 추천</div></div></div>
+      <div class="food-card"><div class="food-emoji">🍖</div><div><div class="food-name">미소카츠 (みそかつ)</div><div class="food-desc">된장 소스 돈카츠. 어린이도 잘 먹는 메뉴</div><div class="food-price">💴 1,500~2,500엔/인 | 야바톤(矢場とん) 체인</div></div></div>
+      <div class="food-card"><div class="food-emoji">🍗</div><div><div class="food-name">테바사키 (手羽先)</div><div class="food-desc">나고야식 닭날개구이. 맥주 안주로 최고</div><div class="food-price">💴 1,000~1,500엔/인</div></div></div>
+
+      <div class="food-region">🍵 시즈오카/오이가와 명물</div>
+      <div class="food-card"><div class="food-emoji">🦐</div><div><div class="food-name">사쿠라에비동 (桜えび丼)</div><div class="food-desc">시즈오카 특산 벚꽃새우 덮밥. 유일무이한 맛</div><div class="food-price">💴 1,500~2,500엔/인</div></div></div>
+      <div class="food-card"><div class="food-emoji">🐟</div><div><div class="food-name">시라스동 (しらす丼)</div><div class="food-desc">멸치덮밥. 신선하고 담백</div><div class="food-price">💴 1,000~2,000엔/인</div></div></div>
+      <div class="food-card"><div class="food-emoji">🚂</div><div><div class="food-name">토마스 도시락 (차내 판매)</div><div class="food-desc">열차 안에서만 살 수 있는 토마스 도시락!</div><div class="food-price">💴 1,500엔 내외 | 사전 예약 권장</div></div></div>
+
+      <div class="food-region">🗻 후지/카와구치코 명물</div>
+      <div class="food-card"><div class="food-emoji">🍜</div><div><div class="food-name">호토 (ほうとう)</div><div class="food-desc">납작 면 된장국. 야마나시 향토 요리. 추운 날 최고</div><div class="food-price">💴 1,500~2,500엔/인 | 불사이 호토 후도 추천</div></div></div>
+      <div class="food-card"><div class="food-emoji">🍝</div><div><div class="food-name">요시다 우동 (吉田うどん)</div><div class="food-desc">쫄깃한 굵은 면 우동. 저렴하고 푸짐</div><div class="food-price">💴 600~900엔/인</div></div></div>
+
+      <div class="food-region">🗼 도쿄 추천</div>
+      <div class="food-card"><div class="food-emoji">🍣</div><div><div class="food-name">회전초밥</div><div class="food-desc">스시로, 구라스시 등 체인점. 앱 예약 가능. 어린이 메뉴 풍부</div><div class="food-price">💴 1,000~2,000엔/인</div></div></div>
+      <div class="food-card"><div class="food-emoji">🍜</div><div><div class="food-name">이치란 라멘 (一蘭)</div><div class="food-desc">개인 부스식 라멘. 어린이도 먹기 좋음. 칸막이 착석</div><div class="food-price">💴 1,200~1,500엔/인</div></div></div>
+
+      <div class="card" style="margin-top:4px;">
+        <div class="card-title">🏪 편의점 활용 팁</div>
+        <div class="method-body">
+          세븐일레븐, 로손, 패밀리마트 어디서나 끼니 해결 가능<br>
+          <b>어린이 간식:</b> 도시락, 삼각김밥, 샌드위치 OK<br>
+          <b>가격:</b> 1인 300~800엔으로 경제적<br>
+          <b>팁:</b> 온천료칸 석식 포함 시 편의점 점심 절약
+        </div>
+      </div>
+    </div>
+
+    <!-- 결제/통신 -->
+    <div class="sub-content" id="sub-payment">
+      <div class="section-label">💳 결제 전략</div>
+      <div class="method-card">
+        <div class="method-title">🥇 1순위: 해외 수수료 면제 카드</div>
+        <div class="method-body">
+          <b>SOL트래블체크 (신한):</b> 편의점 5% 할인 + ATM 수수료 면제<br>
+          <b>하나 트래블로그:</b> 환율 우대 + 수수료 면제<br>
+          <b>팁:</b> 메인 카드 + 예비 카드 2장 준비 (분실 대비)
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-title">🥈 2순위: 카카오페이 간편결제</div>
+        <div class="method-body">
+          알리페이플러스 가맹점에서 사용 가능<br>
+          편의점, 잡화점 등 폭넓은 가맹점<br>
+          <b>사용법:</b> 카카오톡 → 카카오페이 → 결제 바코드 제시
+        </div>
+      </div>
+      <div class="method-card red">
+        <div class="method-title">⚠️ 현금이 반드시 필요한 곳</div>
+        <div class="method-body">
+          • 개인 음식점, 라멘 식권 자판기<br>
+          • 노점상, 온천 입욕료 일부<br>
+          • 주차 요금 (코인주차)<br>
+          • 오이가와 토마스 페어 굿즈<br>
+          • ETC카드 보증금 (300엔)<br>
+          <b>→ 1인당 3~5만엔 현금 준비 권장</b>
+        </div>
+      </div>
+
+      <div class="section-label">🏧 ATM 현금 인출</div>
+      <div class="method-card green">
+        <div class="method-title">✅ 한국 카드 사용 가능 ATM</div>
+        <div class="method-body">
+          <span class="atm-badge">✅ 세븐일레븐 세븐은행 ★최추천</span>
+          <span class="atm-badge">✅ 이온(AEON)</span>
+          <span class="atm-badge">✅ 우체국</span>
+          <span class="atm-badge no">❌ 일반 일본 은행</span><br>
+          <b>한도:</b> 1회 최대 20,000~50,000엔<br>
+          <b>수수료:</b> 트래블카드 면제 / 일반카드 1,000~2,000엔
+        </div>
+      </div>
+
+      <div class="section-label">💴 환전 팁</div>
+      <div class="card">
+        <div class="method-body">
+          <b>추천:</b> 한국 출발 전 인천공항 환전소 (70~80% 우대)<br>
+          <b>은행 앱:</b> 90~95% 우대 쿠폰 미리 신청<br>
+          <b>권장 현금:</b> 총 12~20만엔 (4인 5박)<br>
+          <b>비상용:</b> 세븐은행 ATM 트래블카드 인출
+        </div>
+      </div>
+
+      <div class="section-label">📱 데이터/통신 전략</div>
+      <div class="method-card">
+        <div class="method-title">📡 eSIM ★최추천</div>
+        <div class="method-body">
+          <b>장점:</b> 칩 교체 불필요, 한국번호 유지, 저렴<br>
+          <b>비용:</b> 6일 약 2~4만원/인<br>
+          <b>추천 통신사:</b> 도코모(Docomo) 망 - 시골/외곽 커버리지 우수<br>
+          <b>구매:</b> 클룩, KKday, 아소뷰<br>
+          <b>설정:</b> QR코드 스캔 → 자동 개통 (출국 전 설치)<br>
+          <b>가족 전략:</b> 성인 2명 각각 eSIM + 아이들은 와이파이 공유
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-title">📊 하루 데이터 권장량</div>
+        <div class="method-body">
+          <b>지도+카톡+번역:</b> 1GB/일<br>
+          <b>맛집검색+SNS:</b> 2GB/일 ★추천<br>
+          <b>유튜브 자주:</b> 무제한<br>
+          <b>꿀팁:</b> 구글맵 오프라인 지도 미리 다운로드 (와이파이 연결 시)
+        </div>
+      </div>
+      <div class="info-box" style="margin:0 14px 12px;">
+        📶 <b>무료 와이파이:</b> 세븐일레븐 7SPOT, 맥도날드, JR역사, 호텔 로비<br>
+        ⚠️ 공공 와이파이에서 개인정보 입력 자제
+      </div>
+
+      <div class="section-label">🚌 교통 IC카드 (스이카)</div>
+      <div class="card">
+        <div class="method-body">
+          <b>이번 여행:</b> 렌트카 주 이동이라 IC카드 필요성 낮음<br>
+          <b>도쿄 1일 대중교통 시:</b> 도쿄 도착 당일 JR역에서 구매<br>
+          <b>Welcome Suica:</b> 외국인 전용 (보증금 없음, 잔액 환불 불가)<br>
+          <b>아이폰 사용자:</b> 애플페이 → 스이카 등록 (한국 카드로 충전 가능)
+        </div>
+      </div>
+    </div>
+
+    <!-- AI 가이드 -->
+    <div class="sub-content" id="sub-ai">
+      <div class="chat-container">
+        <div class="quick-phrases" style="margin-bottom:8px;margin-top:4px;">
+          <button class="phrase-btn" onclick="sendQuickPhrase('근처 어린이 친화 식당 추천해줘')">🍜 식당 추천</button>
+          <button class="phrase-btn" onclick="sendQuickPhrase('일본어로 화장실이 어디예요를 알려줘')">🚻 화장실 일어</button>
+          <button class="phrase-btn" onclick="sendQuickPhrase('오이가와 철도 탑승 시 주의사항 알려줘')">🚂 토마스 SL 팁</button>
+          <button class="phrase-btn" onclick="sendQuickPhrase('후지큐 하이랜드에서 아이들이 탈 수 있는 어트랙션 추천해줘')">🎢 어트랙션 추천</button>
+          <button class="phrase-btn" onclick="sendQuickPhrase('렌트카 반납할 때 주의할 점 알려줘')">🚗 렌트카 팁</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-msg ai">안녕하세요! 🗾 일본 가족여행 AI 가이드입니다.<br><br>오이가와 철도 토마스 SL, 후지큐 하이랜드, 맛집, 렌트카, 긴급 상황 등 무엇이든 물어보세요!</div>
+        </div>
+        <div class="chat-input-row">
+          <textarea class="chat-input" id="chatInput" placeholder="궁금한 것을 물어보세요..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+          <button class="chat-send" onclick="sendChat()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB 4: 긴급 ══════════════ -->
+  <div class="tab-content" id="tab-emergency">
+    <div style="background:var(--thomas-red);margin:0 0 0;padding:14px;text-align:center;color:#fff;font-weight:700;font-size:14px;">
+      🆘 긴급 상황 대처 가이드
+    </div>
+
+    <div class="section-label">📞 긴급 전화</div>
+    <div class="emergency-card">
+      <a class="call-btn" href="tel:110">
+        <div><div class="call-name">🚔 경찰</div><div class="call-number">110</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+      <a class="call-btn" href="tel:119">
+        <div><div class="call-name">🚑 소방·구급</div><div class="call-number">119</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+      <a class="call-btn" href="tel:+8223210404">
+        <div><div class="call-name">🇰🇷 한국 영사콜센터 (24시간)</div><div class="call-number">+82-2-3210-0404</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+    </div>
+
+    <div class="section-label">🏛️ 한국 공관</div>
+    <div class="emergency-card">
+      <a class="call-btn" href="tel:+81334527611">
+        <div><div class="call-name">주일 한국 대사관 (도쿄)</div><div class="call-number">+81-3-3452-7611</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+      <a class="call-btn" href="tel:+81525869221">
+        <div><div class="call-name">주나고야 총영사관</div><div class="call-number">+81-52-586-9221</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+      <a class="call-btn" href="tel:+817021539500">
+        <div><div class="call-name">긴급 (야간/주말)</div><div class="call-number">+81-70-2153-9500</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+    </div>
+
+    <div class="section-label">🏥 인근 외국인 대응 병원</div>
+    <div class="emergency-card">
+      <a class="call-btn" href="tel:+81528321121">
+        <div><div class="call-name">나고야 제2적십자병원</div><div class="call-number">052-832-1121</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+      <a class="call-btn" href="tel:+81542533125">
+        <div><div class="call-name">시즈오카 시립병원</div><div class="call-number">054-253-3125</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+      <a class="call-btn" href="tel:+81354110030">
+        <div><div class="call-name">도쿄미드타운 클리닉</div><div class="call-number">03-5411-0030</div></div>
+        <div class="call-icon">📞</div>
+      </a>
+    </div>
+
+    <div class="section-label">📋 상황별 대처</div>
+    <div class="emergency-card">
+      <div class="situation-card">
+        <div class="situation-title">🛂 여권 분실</div>
+        <ol class="situation-steps">
+          <li>가까운 파출소(경찰서)에 분실 신고 → 접수증 수령</li>
+          <li>한국 영사관 방문 (긴급여권 신청)</li>
+          <li>긴급여권 수수료: 6,500엔 (현금 필수)</li>
+          <li>소요: 당일~익일 발급 가능</li>
+        </ol>
+      </div>
+      <div class="situation-card">
+        <div class="situation-title">💳 신용카드 분실/도난</div>
+        <ol class="situation-steps">
+          <li>즉시 카드사 해외 분실신고 전화</li>
+          <li>신한 +82-2-1544-7000</li>
+          <li>국민 +82-2-6300-7300</li>
+          <li>하나 +82-2-1800-1111</li>
+        </ol>
+      </div>
+      <div class="situation-card">
+        <div class="situation-title">🚗 렌트카 사고</div>
+        <ol class="situation-steps">
+          <li>도요타 긴급: 0120-00-5656</li>
+          <li>경찰 신고 (110)</li>
+          <li>국제면허 + 한국면허 + 여권 제시</li>
+          <li>상대방 연락처·차량번호·보험정보 수집</li>
+        </ol>
+      </div>
+      <div class="situation-card">
+        <div class="situation-title">👶 미아 / 어린이 응급</div>
+        <ol class="situation-steps">
+          <li>응급: 119 또는 "Help! Please call ambulance!"</li>
+          <li>미아: 가까운 점원에게 "코도모오 미우시나이마시타"</li>
+          <li>호텔이면 프런트에 먼저 연락</li>
+          <li>여행자보험 증권번호 준비</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section-label">🗣️ 긴급 일본어</div>
+    <div class="emergency-card">
+      <table class="phrase-table">
+        <tr><th>상황</th><th>일본어 / 발음</th></tr>
+        <tr><td>도와주세요!</td><td><span class="phrase-jp">助けてください！</span><br><span class="phrase-pron">타스케테 쿠다사이!</span></td></tr>
+        <tr><td>화장실</td><td><span class="phrase-jp">トイレはどこですか</span><br><span class="phrase-pron">토이레와 도코데스카</span></td></tr>
+        <tr><td>아이 잃어버림</td><td><span class="phrase-jp">子供を見失いました</span><br><span class="phrase-pron">코도모오 미우시나이마시타</span></td></tr>
+        <tr><td>병원 어디?</td><td><span class="phrase-jp">病院はどこですか</span><br><span class="phrase-pron">뵤인와 도코데스카</span></td></tr>
+        <tr><td>계산해주세요</td><td><span class="phrase-jp">お会計をお願いします</span><br><span class="phrase-pron">오카이케이오 오네가이시마스</span></td></tr>
+        <tr><td>이걸 주세요</td><td><span class="phrase-jp">これをください</span><br><span class="phrase-pron">코레오 쿠다사이</span></td></tr>
+        <tr><td>어린이 메뉴?</td><td><span class="phrase-jp">お子様ランチはありますか</span><br><span class="phrase-pron">오코사마 란치와 아리마스카</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- 하단 탭 네비게이션 -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('tab-home')" id="nav-home">
+    <span class="tab-icon">🏠</span><span>홈</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('tab-ready')" id="nav-ready">
+    <span class="tab-icon">✅</span><span>준비</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('tab-schedule')" id="nav-schedule">
+    <span class="tab-icon">📅</span><span>일정</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('tab-info')" id="nav-info">
+    <span class="tab-icon">📖</span><span>정보</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('tab-booking')" id="nav-booking">
+    <span class="tab-icon">🎫</span><span>예매</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('tab-emergency')" id="nav-emergency">
+    <span class="tab-icon">🆘</span><span>긴급</span>
+  </button>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// 탭 전환
+// ════════════════════════════════════════
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  const navId = 'nav-' + tabId.replace('tab-', '');
+  const navBtn = document.getElementById(navId);
+  if (navBtn) navBtn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function switchSubTab(subId) {
+  document.querySelectorAll('.sub-content').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(subId).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ════════════════════════════════════════
+// D-Day 계산
+// ════════════════════════════════════════
+function updateDday() {
+  const input = document.getElementById('departureDateInput');
+  const dateStr = input.value;
+  if (!dateStr) return;
+  localStorage.setItem('departureDate', dateStr);
+  calcDday(dateStr);
+}
+
+function calcDday(dateStr) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dep = new Date(dateStr); dep.setHours(0,0,0,0);
+  const diff = Math.round((dep - today) / 86400000);
+  const ddayBig = document.getElementById('ddayBig');
+  const ddayDesc = document.getElementById('ddayDesc');
+  const headerDday = document.getElementById('headerDday');
+
+  if (diff > 0) {
+    ddayBig.textContent = 'D-' + diff;
+    ddayDesc.textContent = dateStr + ' 출발';
+    headerDday.textContent = 'D-' + diff;
+    document.getElementById('todayCard').style.display = 'none';
+  } else if (diff === 0) {
+    ddayBig.textContent = 'D-Day!';
+    ddayDesc.textContent = '오늘 출발! 즐거운 여행 되세요 🎉';
+    headerDday.textContent = 'D-Day';
+    showTodaySchedule(1);
+  } else {
+    const dayNum = Math.abs(diff) + 1;
+    if (dayNum <= 6) {
+      ddayBig.textContent = 'D+' + Math.abs(diff);
+      ddayDesc.textContent = '여행 ' + dayNum + '일차 진행중 🚂';
+      headerDday.textContent = dayNum + '일차';
+      showTodaySchedule(dayNum);
+    } else {
+      ddayBig.textContent = '여행 완료!';
+      ddayDesc.textContent = '소중한 추억을 만들었어요 💕';
+      headerDday.textContent = '귀국';
+    }
+  }
+}
+
+function showTodaySchedule(dayNum) {
+  const s = getScheduleData().find(d => d.day === dayNum);
+  if (!s) return;
+  document.getElementById('todayCard').style.display = 'block';
+  document.getElementById('todayDayLabel').textContent = dayNum + '일차';
+  document.getElementById('todayTitle').textContent = s.title;
+  const items = document.getElementById('todayItems');
+  items.innerHTML = s.items.map(i => `<div class="today-item"><div class="today-item-dot"></div><div>${i}</div></div>`).join('');
+  const noteEl = document.getElementById('todayNote');
+  if (s.note) { noteEl.style.display = 'block'; noteEl.textContent = '💡 ' + s.note; }
+  else noteEl.style.display = 'none';
+}
+
+// ════════════════════════════════════════
+// 일정 데이터
+// ════════════════════════════════════════
+const defaultScheduleData = [
+  { day:1, title:'나고야 도착', accommodation:'나고야 비즈니스 호텔', mapQ:'나고야 추부 국제공항',
+    note:'렌트카 카운터에서 국제면허증+한국면허증+여권 3가지 제시',
+    items:['나고야 추부공항 입국', '렌트카 픽업 (공항 카운터)', '나고야 시내 이동 (약 40분)', '나고야 시내 관광 및 저녁', '숙박'] },
+  { day:2, title:'지브리파크', accommodation:'나고야 비즈니스 호텔 (연박)', mapQ:'ジブリパーク 長久手市',
+    note:'지브리 대창고 입장 시간 지각 주의! 15분 전 도착 권장',
+    items:['나고야역 → 리니모 → 지브리파크 (약 40분)', '지브리파크 관람 (반나절~종일)', '나고야 명물 저녁 (히츠마부시 or 미소카츠)', '숙박'] },
+  { day:3, title:'오이가와 철도 토마스 SL', accommodation:'카와네온센 호텔/료칸', mapQ:'新金谷駅 島田市',
+    note:'토마스 SL 오전편 10:39 출발 → 늦어도 09:30까지 신카나야역 도착 필요!',
+    items:['나고야 → 신카나야역 렌트카 이동 (약 2.5시간)', '신카나야역 도착 → 전차대 관람', '🚂 토마스 SL 탑승 (10:39 or 13:58)', '토마스 페어 관람 (500엔/인)', '카와네온센 숙박'] },
+  { day:4, title:'후지 이동 + 카와구치코', accommodation:'카와구치코 료칸', mapQ:'河口湖 山梨県',
+    note:'후지산은 날씨 변화무쌍. 우비 준비 필수. 카와구치코에서 후지산 사진 명소 다수',
+    items:['오이가와 → 카와구치코 이동 (약 2시간)', '카와구치코 호수변 산책 + 후지산 뷰 감상', '요시다 우동 or 호토 저녁', '카와구치코 료칸 온천 숙박'] },
+  { day:5, title:'후지큐 하이랜드 토마스랜드', accommodation:'도쿄 시내 호텔', mapQ:'富士急ハイランド',
+    note:'개장 30분 전 도착 권장! 인기 어트랙션은 오전에 탑승. 우비 있으면 토마스랜드 우천 OK',
+    items:['🎢 후지큐 하이랜드 종일 (9:00~17:00)', '토마스랜드 20개+ 어트랙션', '후지큐 → 도쿄 이동 (약 2시간)', '도쿄 도착 + 저녁 + 숙박'] },
+  { day:6, title:'오다이바 + 귀국', accommodation:'-', mapQ:'ダイバーシティ東京プラザ',
+    note:'하네다 출국 2시간 전 공항 도착 필수. 렌트카 반납 위치 미리 확인!',
+    items:['오다이바 유니콘 건담 관람 (무료)', '건담 베이스 도쿄 (프라모델 쇼핑)', '하네다/나리타 공항 이동', '귀국 ✈️'] }
+];
+
+function getScheduleData() {
+  const saved = localStorage.getItem('scheduleData');
+  if (saved) {
+    try { return JSON.parse(saved); } catch(e) {}
+  }
+  return JSON.parse(JSON.stringify(defaultScheduleData));
+}
+
+function saveScheduleData(data) {
+  localStorage.setItem('scheduleData', JSON.stringify(data));
+}
+
+function resetSchedule() {
+  if (confirm('일정을 기본값으로 초기화할까요?')) {
+    localStorage.removeItem('scheduleData');
+    renderSchedule();
+  }
+}
+
+// ════════════════════════════════════════
+// 일정 렌더링
+// ════════════════════════════════════════
+function renderSchedule() {
+  const data = getScheduleData();
+  const container = document.getElementById('scheduleList');
+  container.innerHTML = data.map((s, idx) => `
+    <div class="schedule-card">
+      <div class="schedule-header" onclick="toggleSchedule(${idx})">
+        <div class="schedule-day-badge">${s.day}일차</div>
+        <div class="schedule-header-info">
+          <div class="schedule-day-title">${s.title}</div>
+          <div class="schedule-accommodation">🏨 ${s.accommodation}</div>
+        </div>
+        <div class="schedule-toggle" id="toggle-${idx}">▼</div>
+      </div>
+      <div class="schedule-body" id="body-${idx}">
+        <div id="view-${idx}">
+          ${s.items.map(i => `<div class="schedule-item"><div class="schedule-dot"></div><div>${i}</div></div>`).join('')}
+          ${s.note ? `<div class="schedule-note">💡 ${s.note}</div>` : ''}
+          <div class="schedule-actions">
+            <button class="btn-edit" onclick="editSchedule(${idx})">✏️ 편집</button>
+            <a class="btn-map" href="https://maps.google.com/?q=${encodeURIComponent(s.mapQ)}" target="_blank">📍 지도</a>
+          </div>
+        </div>
+        <div id="edit-${idx}" style="display:none;">
+          <div style="font-size:12px;color:var(--text-sub);margin-bottom:6px;">제목</div>
+          <input id="edit-title-${idx}" value="${s.title}" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:14px;font-family:'Noto Sans KR',sans-serif;margin-bottom:8px;">
+          <div style="font-size:12px;color:var(--text-sub);margin-bottom:6px;">일정 (한 줄씩 입력)</div>
+          <textarea class="schedule-edit-area" id="edit-items-${idx}">${s.items.join('\n')}</textarea>
+          <div style="font-size:12px;color:var(--text-sub);margin:6px 0;">메모 / 주의사항</div>
+          <input id="edit-note-${idx}" value="${s.note||''}" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:13px;font-family:'Noto Sans KR',sans-serif;">
+          <div class="schedule-actions" style="margin-top:10px;">
+            <button class="btn-edit" onclick="cancelEdit(${idx})">취소</button>
+            <button class="btn-save" onclick="saveSchedule(${idx})">💾 저장</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleSchedule(idx) {
+  const body = document.getElementById('body-' + idx);
+  const toggle = document.getElementById('toggle-' + idx);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.classList.toggle('open', !isOpen);
+}
+
+function editSchedule(idx) {
+  document.getElementById('view-' + idx).style.display = 'none';
+  document.getElementById('edit-' + idx).style.display = 'block';
+}
+
+function cancelEdit(idx) {
+  document.getElementById('view-' + idx).style.display = 'block';
+  document.getElementById('edit-' + idx).style.display = 'none';
+}
+
+function saveSchedule(idx) {
+  const data = getScheduleData();
+  const newTitle = document.getElementById('edit-title-' + idx).value.trim();
+  const newItems = document.getElementById('edit-items-' + idx).value.split('\n').filter(l => l.trim());
+  const newNote = document.getElementById('edit-note-' + idx).value.trim();
+  data[idx].title = newTitle || data[idx].title;
+  data[idx].items = newItems.length ? newItems : data[idx].items;
+  data[idx].note = newNote;
+  saveScheduleData(data);
+  renderSchedule();
+  setTimeout(() => {
+    const body = document.getElementById('body-' + idx);
+    body.classList.add('open');
+    document.getElementById('toggle-' + idx).classList.add('open');
+  }, 50);
+}
+
+// ════════════════════════════════════════
+// 여권 체크
+// ════════════════════════════════════════
+const defaultPassports = [
+  { name: '아빠', expiry: '' },
+  { name: '엄마', expiry: '' },
+  { name: '첫째', expiry: '' },
+  { name: '둘째', expiry: '' },
+];
+
+function renderPassports() {
+  const passports = JSON.parse(localStorage.getItem('passports') || JSON.stringify(defaultPassports));
+  const container = document.getElementById('passportList');
+  container.innerHTML = passports.map((p, i) => {
+    let status = '', statusClass = '';
+    if (p.expiry) {
+      const today = new Date(); today.setHours(0,0,0,0);
+      const exp = new Date(p.expiry); exp.setHours(0,0,0,0);
+      const diff = Math.round((exp - today) / 86400000);
+      if (diff < 0) { status = '만료됨'; statusClass = 'status-danger'; }
+      else if (diff < 180) { status = diff + '일 남음'; statusClass = 'status-warn'; }
+      else { status = '✅ 유효'; statusClass = 'status-ok'; }
+    }
+    return `<div class="passport-row">
+      <div class="passport-name">${p.name}</div>
+      <input type="date" class="passport-date" value="${p.expiry}" onchange="savePassport(${i}, this.value)" placeholder="만료일">
+      ${status ? `<span class="passport-status ${statusClass}">${status}</span>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function savePassport(idx, val) {
+  const passports = JSON.parse(localStorage.getItem('passports') || JSON.stringify(defaultPassports));
+  passports[idx].expiry = val;
+  localStorage.setItem('passports', JSON.stringify(passports));
+  renderPassports();
+}
+
+// ════════════════════════════════════════
+// 체크리스트
+// ════════════════════════════════════════
+const checklistData = [
+  { cat:'서류', label:'여권 (4인) - 만료일 확인' },
+  { cat:'서류', label:'국제운전면허증 (운전자)' },
+  { cat:'서류', label:'한국 운전면허증 (원본)' },
+  { cat:'서류', label:'여행자보험 가입증' },
+  { cat:'예매', label:'항공권 E-티켓 (인천→나고야)' },
+  { cat:'예매', label:'항공권 E-티켓 (도쿄→인천)' },
+  { cat:'예매', label:'오이가와 토마스 SL 예매증' },
+  { cat:'예매', label:'후지큐 하이랜드 티켓' },
+  { cat:'예매', label:'지브리파크 티켓 (선택)' },
+  { cat:'예매', label:'숙소 예약증 (4곳)' },
+  { cat:'결제', label:'해외결제 신용카드 (2장)' },
+  { cat:'결제', label:'트래블카드 (ATM 인출용)' },
+  { cat:'결제', label:'엔화 현금 (1인당 3~5만엔)' },
+  { cat:'통신', label:'eSIM 또는 유심 구매·설치' },
+  { cat:'통신', label:'구글맵 오프라인 지도 다운로드' },
+  { cat:'기타', label:'여행용 어댑터 (A타입 110V)' },
+  { cat:'기타', label:'상비약 (어린이 해열제 등)' },
+  { cat:'기타', label:'유모차/카시트 사전 확인' },
+  { cat:'기타', label:'카메라/충전기 충전 완료' },
+];
+
+function renderChecklist() {
+  const checked = JSON.parse(localStorage.getItem('checklist') || '{}');
+  const container = document.getElementById('checklistItems');
+  container.innerHTML = checklistData.map((item, i) => `
+    <div class="checklist-item" onclick="toggleCheck(${i})">
+      <div class="check-box ${checked[i] ? 'checked' : ''}"></div>
+      <div>
+        <span class="check-category">${item.cat}</span>
+        <span class="check-label ${checked[i] ? 'checked' : ''}">${item.label}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCheck(idx) {
+  const checked = JSON.parse(localStorage.getItem('checklist') || '{}');
+  checked[idx] = !checked[idx];
+  localStorage.setItem('checklist', JSON.stringify(checked));
+  renderChecklist();
+}
+
+// ════════════════════════════════════════
+// AI 채팅 (Claude API)
+// ════════════════════════════════════════
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addChatMsg(msg, 'user');
+  const loadingEl = addChatMsg('답변 생성 중...', 'ai loading');
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `당신은 일본 가족여행 전문 AI 가이드입니다.
+여행 정보: 한국인 4인 가족(성인 2명+초등학생 2명), 5박 6일, 10~11월 방문, 렌트카 이동.
+핵심 목적지: 오이가와 철도 토마스 SL(시즈오카현) → 후지큐 하이랜드 토마스랜드(야마나시현) → 도쿄.
+나고야 추부공항 입국, 도쿄 출국. 지브리파크(나고야), 오다이바 건담도 일정에 포함.
+실용적이고 구체적인 한국어로 답변하세요. 짧고 명확하게. 이모지 적당히 사용.`,
+        messages: [{ role: 'user', content: msg }]
+      })
+    });
+    const data = await res.json();
+    loadingEl.remove();
+    const answer = data.content?.[0]?.text || '답변을 받지 못했습니다.';
+    addChatMsg(answer, 'ai');
+  } catch(e) {
+    loadingEl.textContent = '오류가 발생했습니다. 네트워크를 확인해주세요.';
+    loadingEl.classList.remove('loading');
+  }
+}
+
+function addChatMsg(text, type) {
+  const messages = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.className = 'chat-msg ' + type;
+  el.textContent = text;
+  messages.appendChild(el);
+  messages.scrollTop = messages.scrollHeight;
+  return el;
+}
+
+function sendQuickPhrase(phrase) {
+  document.getElementById('chatInput').value = phrase;
+  sendChat();
+}
+
+// ════════════════════════════════════════
+// 초기화
+// ════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // D-Day 복원
+  const savedDate = localStorage.getItem('departureDate');
+  if (savedDate) {
+    document.getElementById('departureDateInput').value = savedDate;
+    calcDday(savedDate);
+  }
+  // 렌더링
+  renderPassports();
+  renderChecklist();
+  renderSchedule();
+});
+</script>
+</body>
+</html>
